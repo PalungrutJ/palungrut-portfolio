@@ -1,0 +1,28 @@
+:root {
+  /* Neutral, calm base. Pastels are reserved for accents/selected states only. */
+  --background: #f2efe9; /* warm neutral page */
+  --surface: #ffffff; /* content surfaces */
+  --surface-2: #ebe6dd; /* raised / hover */
+
+  /* One primary + one secondary pastel accent, used sparingly. */
+  --primary: #7a72c4; /* dusty lavender — graphics/tints/active */
+  --primary-strong: #5b51a6; /* readable lavender for text/links */
+  --secondary: #5e88b0; /* powder blue — secondary accent */
+
+  --text: #2b2830; /* near-black charcoal — strong heading contrast */
+  --text-soft: #423e49; /* body text */
+  --muted: #6d6975; /* secondary/meta text */
+  --success: #4f9a78; /* status highlight (sage) */
+
+  --border: rgba(43, 40, 48, 0.1); /* default hairline */
+  --border-strong: rgba(43, 40, 48, 0.16); /* card / emphasis */
+
+  --primary-soft: rgba(122, 114, 196, 0.12);
+  --secondary-soft: rgba(94, 136, 176, 0.12);
+
+  --ease-smooth: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  /* Two faint background washes only. */
+  --wash-lavender: rgba(122, 114, 196, 0.1);
+  --wash-peach: rgba(224, 170, 150, 0.1);
+}

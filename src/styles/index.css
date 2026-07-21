@@ -1,0 +1,130 @@
+@import './theme.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--text);
+    font-family: theme('fontFamily.sans');
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    color: var(--text);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--primary-strong);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  ::selection {
+    background: var(--primary-soft);
+    color: var(--text);
+  }
+}
+
+@layer components {
+  /* Content surface: separated from the page by a clear hairline + tonal contrast,
+     not by heavy shadow. */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    box-shadow: theme('boxShadow.card');
+  }
+
+  /* Interactive card affordance: looks clickable at rest, lifts on hover. */
+  .card-interactive {
+    transition:
+      transform 0.2s var(--ease-smooth),
+      box-shadow 0.2s var(--ease-smooth),
+      border-color 0.2s var(--ease-smooth);
+  }
+  .card-interactive:hover {
+    transform: translateY(-3px);
+    border-color: var(--primary-strong);
+    box-shadow: theme('boxShadow.lift');
+  }
+
+  /* Stretched hit-area so a whole card is clickable via one control. */
+  .stretched::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+
+  /* Nav bar surface — barely-there translucency, no heavy glass. */
+  .glass {
+    background: color-mix(in srgb, var(--surface) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--border);
+    box-shadow: theme('boxShadow.soft');
+  }
+
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  .tech-grid {
+    background-image:
+      linear-gradient(to right, rgba(53, 49, 59, 0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(53, 49, 59, 0.035) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Thin custom scrollbar (light) */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: #e2d9cd;
+  border-radius: 10px;
+  border: 3px solid var(--background);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #d5c9ba;
+}
