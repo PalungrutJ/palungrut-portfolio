@@ -92,7 +92,7 @@ export function SkillOrbit({ activeSkill, revealed, onSelect }: SkillOrbitProps)
               initial={{ pathLength: reduce ? 1 : 0, opacity: 0 }}
               animate={{
                 pathLength: 1,
-                opacity: revealed ? (isActive ? 0.75 : 0.4) : 0,
+                opacity: revealed ? (isActive ? 0.9 : 0.32) : 0,
               }}
               transition={{
                 duration: reduce ? 0.2 : 0.6,

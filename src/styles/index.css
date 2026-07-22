@@ -27,9 +27,11 @@
   h2,
   h3,
   h4 {
-    line-height: 1.15;
-    letter-spacing: -0.015em;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
     color: var(--text);
+    font-family: theme('fontFamily.display');
+    font-weight: 700;
   }
 
   :focus-visible {
@@ -39,7 +41,7 @@
   }
 
   ::selection {
-    background: var(--primary-soft);
+    background: rgba(91, 124, 255, 0.3);
     color: var(--text);
   }
 }
@@ -74,27 +76,31 @@
     border-radius: inherit;
   }
 
-  /* Nav bar surface — barely-there translucency, no heavy glass. */
+  /* Nav bar surface — dark translucency with a light hairline. */
   .glass {
-    background: color-mix(in srgb, var(--surface) 88%, transparent);
-    backdrop-filter: blur(8px);
-    border: 1px solid var(--border);
-    box-shadow: theme('boxShadow.soft');
+    background: color-mix(in srgb, var(--surface) 78%, transparent);
+    backdrop-filter: blur(12px) saturate(1.2);
+    border: 1px solid var(--border-strong);
+    box-shadow: theme('boxShadow.panel');
   }
 
   .eyebrow {
     text-transform: uppercase;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.18em;
     font-size: 0.72rem;
     font-weight: 600;
     color: var(--muted);
+    font-family: theme('fontFamily.mono');
   }
 
+  /* Structural technical grid — light lines on the navy foundation. */
   .tech-grid {
     background-image:
-      linear-gradient(to right, rgba(53, 49, 59, 0.035) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(53, 49, 59, 0.035) 1px, transparent 1px);
-    background-size: 48px 48px;
+      linear-gradient(to right, rgba(147, 168, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(147, 168, 255, 0.05) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(circle at 70% 30%, black, transparent 78%);
+    -webkit-mask-image: radial-gradient(circle at 70% 30%, black, transparent 78%);
   }
 }
 
@@ -112,7 +118,7 @@
   }
 }
 
-/* Thin custom scrollbar (light) */
+/* Thin custom scrollbar (dark) */
 ::-webkit-scrollbar {
   width: 12px;
   height: 12px;
@@ -121,10 +127,10 @@
   background: var(--background);
 }
 ::-webkit-scrollbar-thumb {
-  background: #e2d9cd;
+  background: #2b3852;
   border-radius: 10px;
   border: 3px solid var(--background);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #d5c9ba;
+  background: #38496b;
 }

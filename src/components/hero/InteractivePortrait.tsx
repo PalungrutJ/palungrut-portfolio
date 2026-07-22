@@ -114,7 +114,7 @@ export function InteractivePortrait({
         className="absolute inset-0 -z-10 rounded-[2.5rem] blur-3xl"
         style={{ x: leanX, y: leanY }}
         animate={{
-          background: `radial-gradient(60% 55% at 44% 36%, ${hexToRgba(accent, 0.34)}, transparent 72%)`,
+          background: `radial-gradient(58% 54% at 46% 38%, ${hexToRgba(accent, 0.5)}, transparent 72%)`,
         }}
         transition={{ duration: 0.6, ease: 'easeInOut' }}
       />
@@ -137,15 +137,42 @@ export function InteractivePortrait({
             : { duration: 0 }
         }
       >
-        {/* soft frame ring */}
+        {/* structured system frame ring */}
         <motion.div
-          className="absolute -inset-2 rounded-[2rem] border border-[color:var(--primary-soft)] bg-surface/40"
-          style={{ transform: 'translateZ(24px)' }}
+          className="absolute -inset-2 rounded-[2rem] border bg-surface/30 backdrop-blur-sm"
+          style={{
+            transform: 'translateZ(24px)',
+            borderColor: hexToRgba(accent, 0.42),
+            boxShadow: `0 0 0 1px ${hexToRgba(accent, 0.12)}, 0 20px 60px -30px ${hexToRgba(accent, 0.6)}`,
+          }}
+          animate={{ borderColor: hexToRgba(accent, 0.42) }}
+          transition={{ duration: 0.6, ease: 'easeInOut' }}
         />
+
+        {/* corner brackets — abstract technical framing */}
+        {['left-1 top-1', 'right-1 top-1', 'left-1 bottom-1', 'right-1 bottom-1'].map((pos, i) => (
+          <span
+            key={i}
+            className={`absolute ${pos} h-4 w-4`}
+            style={{
+              transform: 'translateZ(30px)',
+              borderColor: hexToRgba(accent, 0.7),
+              borderTopWidth: pos.includes('top') ? 2 : 0,
+              borderBottomWidth: pos.includes('bottom') ? 2 : 0,
+              borderLeftWidth: pos.includes('left') ? 2 : 0,
+              borderRightWidth: pos.includes('right') ? 2 : 0,
+              borderTopLeftRadius: pos === 'left-1 top-1' ? 8 : 0,
+              borderTopRightRadius: pos === 'right-1 top-1' ? 8 : 0,
+              borderBottomLeftRadius: pos === 'left-1 bottom-1' ? 8 : 0,
+              borderBottomRightRadius: pos === 'right-1 bottom-1' ? 8 : 0,
+            }}
+            aria-hidden
+          />
+        ))}
 
         {/* portrait */}
         <motion.div
-          className="absolute inset-0 overflow-hidden rounded-[1.75rem] border border-border bg-surface shadow-card"
+          className="absolute inset-0 overflow-hidden rounded-[1.75rem] border border-border-strong bg-surface-2 shadow-card"
           style={{ transform: 'translateZ(10px)' }}
           initial={reduce ? { opacity: 0 } : { opacity: 0, clipPath: 'inset(0 0 100% 0)' }}
           animate={

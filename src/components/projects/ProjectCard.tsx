@@ -3,6 +3,7 @@ import { ArrowUpRight, Target, Wrench, TrendingUp } from 'lucide-react';
 import type { Project } from '@/types';
 import { useLanguage } from '@/i18n/LanguageProvider';
 import { ui } from '@/i18n/ui';
+import { useTilt } from '@/hooks/useTilt';
 import { GlassPanel } from '@/components/ui/GlassPanel';
 import { Chip } from '@/components/ui/Chip';
 
@@ -15,13 +16,21 @@ interface ProjectCardProps {
 export function ProjectCard({ project, index, onOpen }: ProjectCardProps) {
   const reduce = useReducedMotion();
   const { t } = useLanguage();
+  const tilt = useTilt(6);
   return (
     <motion.article
       initial={reduce ? { opacity: 0 } : { opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
       transition={{ duration: reduce ? 0.3 : 0.5, delay: (index % 3) * 0.08 }}
+      style={{ perspective: 1000 }}
     >
+      <motion.div
+        ref={tilt.ref}
+        style={tilt.style}
+        {...tilt.handlers}
+        className="h-full"
+      >
       <GlassPanel className="group card-interactive relative flex h-full cursor-pointer flex-col p-5">
         <div className="flex items-start justify-between gap-3">
           <div>
@@ -76,6 +85,7 @@ export function ProjectCard({ project, index, onOpen }: ProjectCardProps) {
           />
         </button>
       </GlassPanel>
+      </motion.div>
     </motion.article>
   );
 }

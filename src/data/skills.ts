@@ -6,6 +6,7 @@ import {
   Code2,
   FolderKanban,
   FileText,
+  Mail,
 } from 'lucide-react';
 import type { Skill, SkillId } from '@/types';
 
@@ -38,7 +39,7 @@ export const skills: Skill[] = [
       en: 'Five internal systems spanning QC, IT asset tracking, access control and reporting.',
       th: 'ห้าระบบภายในครอบคลุมงาน QC การติดตามทรัพย์สินไอที การควบคุมการเข้าถึง และการรายงาน',
     },
-    accent: '#5b5fb0',
+    accent: '#7c8cff',
     angle: 0,
     featured: true,
     scrollTarget: 'projects',
@@ -68,8 +69,8 @@ export const skills: Skill[] = [
       en: 'Built the data layer and reporting queries behind the QC inspection and store-location systems.',
       th: 'สร้างชั้นข้อมูลและคิวรีรายงานเบื้องหลังระบบตรวจสอบ QC และระบบจัดการตำแหน่งจัดเก็บ',
     },
-    accent: '#3f74a6',
-    angle: 51,
+    accent: '#4f9ee0',
+    angle: 45,
   },
   {
     id: 'erp',
@@ -97,8 +98,8 @@ export const skills: Skill[] = [
       en: 'Supported ERP go-live and connected shop-floor processes to the system.',
       th: 'สนับสนุนช่วง go-live ของ ERP และเชื่อมกระบวนการหน้างานเข้ากับระบบ',
     },
-    accent: '#2f8a82',
-    angle: 102,
+    accent: '#34c4a8',
+    angle: 90,
   },
   {
     id: 'network',
@@ -126,8 +127,8 @@ export const skills: Skill[] = [
       en: 'Deploy and host internal web systems on IIS/Windows Server infrastructure.',
       th: 'ติดตั้งและโฮสต์ระบบเว็บภายในบนโครงสร้าง IIS/Windows Server',
     },
-    accent: '#5b8560',
-    angle: 153,
+    accent: '#6fbf7a',
+    angle: 135,
   },
   {
     id: 'hardware',
@@ -155,8 +156,8 @@ export const skills: Skill[] = [
       en: 'Built a notebook handover/return system to track IT assets end to end.',
       th: 'สร้างระบบยืม-คืนโน้ตบุ๊กเพื่อติดตามทรัพย์สินไอทีครบวงจร',
     },
-    accent: '#a3743f',
-    angle: 204,
+    accent: '#d89a5b',
+    angle: 180,
   },
   {
     id: 'software',
@@ -183,8 +184,8 @@ export const skills: Skill[] = [
       en: 'Modernized legacy tools into maintainable web systems used across departments.',
       th: 'ปรับเครื่องมือระบบเดิมให้เป็นระบบเว็บที่ดูแลง่ายและใช้ข้ามหลายแผนก',
     },
-    accent: '#8a5480',
-    angle: 255,
+    accent: '#b06fb0',
+    angle: 225,
   },
   {
     id: 'resume',
@@ -203,9 +204,33 @@ export const skills: Skill[] = [
     ],
     relatedProjectIds: [],
     evidence: { en: 'Kept current for job applications.', th: 'อัปเดตให้พร้อมสำหรับการสมัครงานเสมอ' },
-    accent: '#5a6472',
-    angle: 306,
+    accent: '#8a97ab',
+    angle: 270,
     scrollTarget: 'resume',
+  },
+  {
+    id: 'contact',
+    label: { en: 'Contact', th: 'ติดต่อ' },
+    title: { en: 'Get in Touch', th: 'ช่องทางติดต่อ' },
+    icon: Mail,
+    tagline: { en: 'Email, LinkedIn & GitHub', th: 'อีเมล LinkedIn และ GitHub' },
+    summary: {
+      en: 'Open to IT, ERP, Application Support, Infrastructure and Internal System Developer roles. The fastest way to reach me is by email — resume and profiles are one click away.',
+      th: 'เปิดรับตำแหน่งงาน IT, ERP, Application Support, Infrastructure และนักพัฒนาระบบภายใน ติดต่อได้เร็วที่สุดทางอีเมล พร้อมลิงก์เรซูเม่และโปรไฟล์',
+    },
+    capabilities: [
+      { en: 'Email for the quickest reply', th: 'อีเมลสำหรับการตอบกลับที่รวดเร็ว' },
+      { en: 'LinkedIn & GitHub profiles', th: 'โปรไฟล์ LinkedIn และ GitHub' },
+      { en: 'Downloadable resume (PDF)', th: 'ดาวน์โหลดเรซูเม่ (PDF)' },
+    ],
+    relatedProjectIds: [],
+    evidence: {
+      en: 'Actively looking for the right team to build reliable internal systems with.',
+      th: 'กำลังมองหาทีมที่ใช่เพื่อร่วมสร้างระบบภายในที่เชื่อถือได้',
+    },
+    accent: '#4fb6c7',
+    angle: 315,
+    scrollTarget: 'contact',
   },
 ];
 

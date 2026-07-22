@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { experience, categoryLabels } from '@/data/experience';
 import { useLanguage } from '@/i18n/LanguageProvider';
@@ -8,6 +9,8 @@ import { Chip } from '@/components/ui/Chip';
 export function ExperienceSection() {
   const reduce = useReducedMotion();
   const { t } = useLanguage();
+  // The item whose marker last crossed the viewport centre is the "active" one.
+  const [activeId, setActiveId] = useState<string>(experience[0]?.id ?? '');
   return (
     <section id="experience" className="mx-auto max-w-content px-4 py-24 sm:px-6 md:py-32">
       <SectionHeader
@@ -26,17 +29,39 @@ export function ExperienceSection() {
             transition={{ duration: reduce ? 0.3 : 0.45, delay: (i % 4) * 0.06 }}
             className="relative pl-8"
           >
+            {/* centre-crossing sentinel for the active state */}
+            <motion.span
+              className="pointer-events-none absolute left-0 top-2 h-4 w-4"
+              viewport={{ margin: '-50% 0px -50% 0px', amount: 'some' }}
+              onViewportEnter={() => setActiveId(item.id)}
+              aria-hidden
+            />
             {/* rail */}
             <span
               className="absolute left-[7px] top-6 h-[calc(100%+0.5rem)] w-px bg-border last:hidden"
               aria-hidden
             />
-            <span
-              className="absolute left-0 top-2 flex h-4 w-4 items-center justify-center rounded-full border border-primary/50 bg-surface"
+            <motion.span
+              className="absolute left-0 top-2 flex h-4 w-4 items-center justify-center rounded-full border bg-surface"
+              animate={{
+                borderColor: activeId === item.id ? 'var(--primary)' : 'var(--border-strong)',
+                scale: activeId === item.id ? 1.15 : 1,
+                boxShadow:
+                  activeId === item.id
+                    ? '0 0 0 4px var(--primary-soft)'
+                    : '0 0 0 0px transparent',
+              }}
+              transition={{ type: 'spring', stiffness: 300, damping: 22 }}
               aria-hidden
             >
-              <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-            </span>
+              <motion.span
+                className="h-1.5 w-1.5 rounded-full"
+                animate={{
+                  backgroundColor: activeId === item.id ? 'var(--primary)' : 'var(--muted)',
+                  scale: activeId === item.id ? 1.2 : 1,
+                }}
+              />
+            </motion.span>
 
             <div className="card rounded-panel p-4 sm:p-5">
               <div className="flex flex-wrap items-center gap-2">

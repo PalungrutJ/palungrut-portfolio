@@ -1,9 +1,10 @@
-import { Mail, Phone, Github, Linkedin, MapPin } from 'lucide-react';
+import { Mail, Phone, Github, Linkedin, MapPin, FileText } from 'lucide-react';
 import { profile } from '@/data/profile';
 import { useLanguage } from '@/i18n/LanguageProvider';
 import { ui } from '@/i18n/ui';
 import { SectionHeader } from '@/components/ui/SectionHeader';
 import { GlassPanel } from '@/components/ui/GlassPanel';
+import { MagneticButton } from '@/components/ui/MagneticButton';
 
 export function ContactSection() {
   const { t } = useLanguage();
@@ -23,8 +24,19 @@ export function ContactSection() {
 
   return (
     <section id="contact" className="mx-auto max-w-content px-4 py-24 sm:px-6 md:py-32">
-      <GlassPanel className="overflow-hidden">
-        <div className="grid gap-8 p-6 sm:p-10 lg:grid-cols-2">
+      <GlassPanel className="relative overflow-hidden">
+        {/* strong final state: a quiet accent aura anchored to the panel */}
+        <div
+          className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full blur-3xl"
+          style={{ background: 'radial-gradient(circle, var(--primary-soft), transparent 70%)' }}
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute inset-x-0 top-0 h-px"
+          style={{ background: 'linear-gradient(90deg, transparent, var(--primary), transparent)' }}
+          aria-hidden
+        />
+        <div className="relative grid gap-8 p-6 sm:p-10 lg:grid-cols-2">
           <div>
             <SectionHeader eyebrow={t(ui.contact.eyebrow)} title={t(ui.contact.title)} />
             <p className="mt-4 max-w-md text-[15px] leading-relaxed text-muted">
@@ -34,6 +46,24 @@ export function ContactSection() {
               <MapPin size={15} className="text-primary" />
               {t(profile.location)}
             </p>
+
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <MagneticButton
+                href={`mailto:${profile.email}`}
+                className="bg-text text-background shadow-glow hover:shadow-lift focus-visible:ring-[color:var(--primary-strong)]"
+              >
+                <Mail size={17} /> {t(ui.contact.labels.email)}
+              </MagneticButton>
+              <MagneticButton
+                href={profile.resumeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                strength={6}
+                className="border border-border-strong bg-surface-2 text-text hover:border-[color:var(--primary-strong)] focus-visible:ring-[color:var(--primary-strong)]"
+              >
+                <FileText size={16} /> {t(ui.hero.viewResume)}
+              </MagneticButton>
+            </div>
           </div>
 
           <div className="grid gap-3 sm:grid-cols-2">

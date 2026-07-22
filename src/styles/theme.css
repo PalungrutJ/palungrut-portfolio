@@ -1,28 +1,40 @@
 :root {
-  /* Neutral, calm base. Pastels are reserved for accents/selected states only. */
-  --background: #f2efe9; /* warm neutral page */
-  --surface: #ffffff; /* content surfaces */
-  --surface-2: #ebe6dd; /* raised / hover */
+  color-scheme: dark;
 
-  /* One primary + one secondary pastel accent, used sparingly. */
-  --primary: #7a72c4; /* dusty lavender — graphics/tints/active */
-  --primary-strong: #5b51a6; /* readable lavender for text/links */
-  --secondary: #5e88b0; /* powder blue — secondary accent */
+  /* ---- Foundation: dark navy, layered for spatial depth ---- */
+  --background: #101827; /* deep navy page foundation */
+  --background-2: #0b111d; /* deeper — footer / recessed bands */
+  --surface: #172033; /* elevated content surface (cards, panels, nodes) */
+  --surface-2: #1d293b; /* raised / hover surface */
+  --surface-3: #24314a; /* strongest raised (active chips, inset) */
 
-  --text: #2b2830; /* near-black charcoal — strong heading contrast */
-  --text-soft: #423e49; /* body text */
-  --muted: #6d6975; /* secondary/meta text */
-  --success: #4f9a78; /* status highlight (sage) */
+  /* Warm off-white — reserved for the dominant CTA + primary text (keeps pastel warmth). */
+  --on-light: #101827; /* text placed on the warm off-white surface */
 
-  --border: rgba(43, 40, 48, 0.1); /* default hairline */
-  --border-strong: rgba(43, 40, 48, 0.16); /* card / emphasis */
+  /* ---- Accents: controlled pastels tuned for a navy backdrop ---- */
+  --primary: #5b7cff; /* desaturated blue — graphics / tints / active */
+  --primary-strong: #93a8ff; /* lighter, readable on dark — text/links/labels */
+  --secondary: #9a8bd6; /* muted violet — secondary accent */
+  --interactive: #4fb6c7; /* restrained cyan — interactive highlights only */
 
-  --primary-soft: rgba(122, 114, 196, 0.12);
-  --secondary-soft: rgba(94, 136, 176, 0.12);
+  /* ---- Text on the dark foundation ---- */
+  --text: #f3f5fa; /* near-white, faintly warm — headings/body */
+  --text-soft: #cdd6e6; /* softened body text */
+  --muted: #8a97ab; /* meta / secondary text */
+  --success: #5fc39a; /* status highlight (sage), brightened for dark */
+
+  /* ---- Borders: light hairlines on dark ---- */
+  --border: rgba(198, 214, 240, 0.12); /* default hairline */
+  --border-strong: rgba(198, 214, 240, 0.2); /* card / emphasis */
+
+  --primary-soft: rgba(91, 124, 255, 0.16);
+  --secondary-soft: rgba(154, 139, 214, 0.16);
+  --interactive-soft: rgba(79, 182, 199, 0.16);
 
   --ease-smooth: cubic-bezier(0.22, 0.61, 0.36, 1);
 
-  /* Two faint background washes only. */
-  --wash-lavender: rgba(122, 114, 196, 0.1);
-  --wash-peach: rgba(224, 170, 150, 0.1);
+  /* Atmospheric background washes (behind the composition, away from text). */
+  --wash-primary: rgba(76, 111, 255, 0.16);
+  --wash-violet: rgba(124, 111, 175, 0.14);
+  --wash-cyan: rgba(79, 182, 199, 0.1);
 }

@@ -18,6 +18,13 @@ export default {
         'border-strong': 'var(--border-strong)',
       },
       fontFamily: {
+        display: [
+          'Space Grotesk',
+          'Inter',
+          'system-ui',
+          'Segoe UI',
+          'sans-serif',
+        ],
         sans: [
           'Inter',
           'system-ui',
@@ -28,15 +35,15 @@ export default {
           'Arial',
           'sans-serif',
         ],
-        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace'],
+        mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace'],
       },
       boxShadow: {
-        // Restrained shadows — surfaces separate mainly via borders + tonal contrast.
-        soft: '0 1px 2px rgba(43,40,48,0.04)',
-        card: '0 1px 2px rgba(43,40,48,0.04), 0 4px 12px -8px rgba(43,40,48,0.10)',
-        lift: '0 6px 16px -8px rgba(43,40,48,0.16), 0 24px 48px -24px rgba(43,40,48,0.22)',
-        glow: '0 2px 8px -2px rgba(122,114,196,0.35)',
-        panel: '0 1px 2px rgba(43,40,48,0.04), 0 6px 18px -12px rgba(43,40,48,0.14)',
+        // Depth on a dark foundation: darker ambient shadow + subtle light rim on top.
+        soft: '0 1px 2px rgba(0,0,0,0.3)',
+        card: '0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5)',
+        lift: '0 10px 24px -12px rgba(0,0,0,0.55), 0 28px 56px -28px rgba(0,0,0,0.65)',
+        glow: '0 4px 16px -4px rgba(91,124,255,0.45)',
+        panel: '0 1px 2px rgba(0,0,0,0.35), 0 10px 30px -16px rgba(0,0,0,0.55)',
       },
       borderRadius: {
         panel: '1rem',

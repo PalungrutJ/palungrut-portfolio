@@ -21,6 +21,14 @@ export const ui = {
       en: 'Select a system to explore',
       th: 'เลือกระบบที่ต้องการสำรวจ',
     },
+    selectHint: {
+      en: 'Select a capability to explore',
+      th: 'เลือกความสามารถที่ต้องการสำรวจ',
+    },
+    portraitCaption: {
+      en: 'Interactive capability map — each node opens a real area of my work',
+      th: 'แผนผังความสามารถแบบอินเทอร์แอกทีฟ — แต่ละจุดเปิดงานจริงในแต่ละด้าน',
+    },
   },
   panel: {
     activeSystem: { en: 'Active system', th: 'ระบบที่เลือก' },

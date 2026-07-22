@@ -14,7 +14,8 @@ export type SkillId =
   | 'hardware'
   | 'software'
   | 'projects'
-  | 'resume';
+  | 'resume'
+  | 'contact';
 
 export interface Skill {
   id: SkillId;

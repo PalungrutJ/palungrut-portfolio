@@ -31,9 +31,9 @@ export const SkillNode = forwardRef<HTMLButtonElement, SkillNodeProps>(function 
   const Icon = skill.icon;
   const accent = skill.accent;
 
-  const restShadow = '0 1px 2px rgba(43,40,48,0.05), 0 8px 20px -14px rgba(43,40,48,0.35)';
-  const hoverShadow = `0 10px 26px -12px ${hexToRgba(accent, 0.5)}`;
-  const selectedShadow = `0 12px 30px -10px ${hexToRgba(accent, 0.6)}`;
+  const restShadow = `0 1px 0 rgba(255,255,255,0.04) inset, 0 10px 24px -14px rgba(0,0,0,0.7)`;
+  const hoverShadow = `0 12px 30px -12px ${hexToRgba(accent, 0.65)}, 0 0 0 1px ${hexToRgba(accent, 0.5)}`;
+  const selectedShadow = `0 14px 34px -10px ${hexToRgba(accent, 0.7)}, 0 0 24px -6px ${hexToRgba(accent, 0.45)}`;
 
   return (
     <div
@@ -56,25 +56,25 @@ export const SkillNode = forwardRef<HTMLButtonElement, SkillNodeProps>(function 
           aria-pressed={active}
           initial={false}
           animate={{
-            scale: active ? 1.1 : 1,
-            backgroundColor: active ? hexToRgba(accent, 0.16) : 'var(--surface)',
+            scale: active ? 1.12 : 1,
+            backgroundColor: active ? hexToRgba(accent, 0.2) : 'var(--surface-2)',
             borderColor: active ? accent : 'var(--border-strong)',
             boxShadow: active ? selectedShadow : restShadow,
+            opacity: dimmed && !active ? 0.62 : 1,
           }}
           whileHover={
             reduce
               ? undefined
               : active
-                ? { y: -2 }
-                : { y: -4, scale: 1.05, boxShadow: hoverShadow }
+                ? { y: -2, opacity: 1 }
+                : { y: -5, scale: 1.06, opacity: 1, backgroundColor: hexToRgba(accent, 0.12), borderColor: accent, boxShadow: hoverShadow }
           }
-          whileTap={{ scale: active ? 1.06 : 0.97 }}
+          whileTap={{ scale: active ? 1.07 : 0.97 }}
           transition={{ type: 'spring', stiffness: 320, damping: 24 }}
           style={{ borderWidth: active ? 2 : 1 }}
           className={cn(
-            'group relative flex w-[108px] flex-col items-center gap-2 rounded-2xl border px-3 py-3 text-center',
+            'group relative flex w-[112px] flex-col items-center gap-2 rounded-2xl border px-3 py-3 text-center backdrop-blur-sm',
             'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--primary-strong)] focus-visible:ring-offset-2 focus-visible:ring-offset-background',
-            dimmed && !active && 'opacity-90',
           )}
         >
           {/* selected status dot */}
