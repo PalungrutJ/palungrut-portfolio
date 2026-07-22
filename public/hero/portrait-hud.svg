@@ -1,0 +1,199 @@
+<svg viewBox="0 0 1200 1200" xmlns="http://www.w3.org/2000/svg"
+     fill="none" role="img" aria-label="Circular HUD overlay">
+
+  <!-- ============================================================
+       Circular HUD overlay
+       - Transparent background (no rect fill, no raster images)
+       - All colours inherit from `currentColor`
+       - Large empty centre reserved for a portrait
+       - Each group has a stable id and is independently animatable
+       ============================================================ -->
+
+  <style><![CDATA[
+    /* Base colour: override by setting `color` on the svg element (or a parent). */
+    svg { color: #4a6fa5; }
+
+    /* Rotate orbit groups around the true canvas centre (600,600). */
+    #orbit-back, #orbit-main, #orbit-nodes {
+      transform-box: view-box;
+      transform-origin: 600px 600px;
+    }
+
+    /* --- Example animation hooks (uncomment to activate) -----------
+    #orbit-back  { animation: hud-spin 60s linear infinite reverse; }
+    #orbit-main  { animation: hud-spin 90s linear infinite; }
+    #orbit-nodes { animation: hud-spin 45s linear infinite; }
+    #accent-lines { animation: hud-fade 4s ease-in-out infinite; }
+
+    @keyframes hud-spin { to { transform: rotate(360deg); } }
+    @keyframes hud-fade { 0%,100% { opacity: .35 } 50% { opacity: 1 } }
+    ---------------------------------------------------------------- */
+  ]]></style>
+
+  <!-- ==========================================================
+       ORBIT-BACK  — faint outer / offset rings, incomplete
+       ========================================================== -->
+  <g id="orbit-back" stroke="currentColor" fill="none"
+     stroke-width="1.2" stroke-opacity="0.28">
+    <!-- large offset ring, open at the bottom -->
+    <path d="M207.3 827.5 A465 465 0 1 1 1012.7 827.5" />
+    <!-- right-side outer crescent -->
+    <path d="M839 186 A478 478 0 0 1 839 1014" stroke-opacity="0.22" />
+    <!-- left-side outer crescent -->
+    <path d="M355 1024.4 A490 490 0 0 1 355 175.6" stroke-opacity="0.16"
+          stroke-dasharray="2 8" />
+  </g>
+
+  <!-- ==========================================================
+       ORBIT-MAIN  — primary ring + incomplete accent arcs
+       ========================================================== -->
+  <g id="orbit-main" stroke="currentColor" fill="none">
+    <!-- primary ring -->
+    <circle cx="600" cy="600" r="430" stroke-width="2" stroke-opacity="0.75" />
+    <!-- inner accent arc, lower -->
+    <path d="M910.25 860.33 A405 405 0 0 1 289.75 860.33"
+          stroke-width="1.4" stroke-opacity="0.5" />
+    <!-- inner accent arc, upper -->
+    <path d="M240.6 392.5 A415 415 0 0 1 959.4 392.5"
+          stroke-width="1.4" stroke-opacity="0.5" />
+    <!-- short outer accent arc, right -->
+    <path d="M1013.5 449.5 A440 440 0 0 1 981.05 820"
+          stroke-width="2.5" stroke-opacity="0.65" stroke-linecap="round" />
+    <!-- dashed inner sweep -->
+    <path d="M255 500 A360 360 0 0 1 430 320"
+          stroke-width="1" stroke-opacity="0.4" stroke-dasharray="3 7" />
+    <path d="M780 895 A360 360 0 0 1 945 720"
+          stroke-width="1" stroke-opacity="0.4" stroke-dasharray="3 7" />
+  </g>
+
+  <!-- ==========================================================
+       ORBIT-NODES  — connection points sitting on the ring
+       ========================================================== -->
+  <g id="orbit-nodes" stroke="currentColor" fill="currentColor">
+    <!-- solid node dots -->
+    <circle cx="585"    cy="170.3" r="6" fill-opacity="0.9" />
+    <circle cx="1020.6" cy="689.4" r="6" fill-opacity="0.9" />
+    <circle cx="335.3"  cy="938.8" r="6" fill-opacity="0.9" />
+    <circle cx="210.3"  cy="418.3" r="6" fill-opacity="0.9" />
+    <circle cx="720"    cy="188"   r="7" fill-opacity="0.9" />
+    <circle cx="735"    cy="1108"  r="6" fill-opacity="0.9" />
+
+    <!-- ring nodes (open circle + inner dot) -->
+    <g fill="none" stroke-width="1.5" stroke-opacity="0.7">
+      <circle cx="846.6" cy="952.2" r="11" />
+      <circle cx="929.4" cy="323.6" r="11" />
+    </g>
+    <circle cx="846.6" cy="952.2" r="3" fill-opacity="0.9" stroke="none" />
+    <circle cx="929.4" cy="323.6" r="3" fill-opacity="0.9" stroke="none" />
+
+    <!-- faint halo rings on two nodes -->
+    <circle cx="1020.6" cy="689.4" r="12" fill="none"
+            stroke-width="1" stroke-opacity="0.35" />
+    <circle cx="585" cy="170.3" r="12" fill="none"
+            stroke-width="1" stroke-opacity="0.35" />
+  </g>
+
+  <!-- ==========================================================
+       SIDE-PANELS  — corner frames, data panel, ring stacks
+       ========================================================== -->
+  <g id="side-panels" stroke="currentColor" fill="none"
+     stroke-width="1.5" stroke-opacity="0.55">
+
+    <!-- top-left hexagonal frame -->
+    <path d="M120 120 L340 120 L355 145 L300 275 L75 275 L75 165 Z" />
+
+    <!-- bottom-left hexagonal frame -->
+    <path d="M75 1080 L300 1080 L355 1110 L330 1178 L55 1178 L55 1120 Z" />
+
+    <!-- bottom-right data panel -->
+    <path d="M895 958 L1180 958 L1180 995 L1120 1128 L878 1128 L878 998 Z" />
+    <!-- filled header bar inside the data panel -->
+    <path d="M905 985 L1150 985 L1140 1010 L895 1010 Z"
+          fill="currentColor" fill-opacity="0.14" stroke="none" />
+    <!-- data readout lines -->
+    <g stroke-width="2" stroke-opacity="0.35" stroke-linecap="round">
+      <line x1="900" y1="1035" x2="1110" y2="1035" />
+      <line x1="900" y1="1055" x2="1075" y2="1055" />
+      <line x1="900" y1="1075" x2="1095" y2="1075" />
+      <line x1="900" y1="1095" x2="1040" y2="1095" />
+    </g>
+
+    <!-- LEFT ring stack -->
+    <g stroke-opacity="0.6">
+      <line x1="95" y1="505" x2="95" y2="865" stroke-width="1"
+            stroke-opacity="0.35" />
+      <circle cx="95" cy="555" r="40" />
+      <circle cx="95" cy="685" r="40" />
+      <circle cx="95" cy="815" r="40" />
+      <circle cx="95" cy="505" r="4" fill="currentColor" stroke="none" />
+      <circle cx="95" cy="865" r="4" fill="currentColor" stroke="none" />
+    </g>
+
+    <!-- RIGHT ring stack -->
+    <g stroke-opacity="0.6">
+      <line x1="1120" y1="300" x2="1120" y2="740" stroke-width="1"
+            stroke-opacity="0.35" />
+      <!-- double top ring -->
+      <circle cx="1120" cy="345" r="50" />
+      <circle cx="1120" cy="345" r="44" stroke-opacity="0.4" />
+      <circle cx="1120" cy="470" r="36" />
+      <circle cx="1120" cy="590" r="36" />
+      <circle cx="1120" cy="700" r="36" />
+      <circle cx="1120" cy="290" r="4" fill="currentColor" stroke="none" />
+    </g>
+  </g>
+
+  <!-- ==========================================================
+       ACCENT-LINES  — connectors, brackets, hatch ticks, dots
+       ========================================================== -->
+  <g id="accent-lines" stroke="currentColor" fill="none"
+     stroke-width="1.2" stroke-opacity="0.5">
+
+    <!-- connector: left orbit node -> top-left frame -->
+    <path d="M210.3 418.3 L150 350 L150 275" stroke-linecap="round" />
+    <!-- connector: bottom-left orbit node -> bottom-left frame -->
+    <path d="M335.3 938.8 L300 1000 L300 1080" stroke-linecap="round" />
+    <!-- connector: right orbit node -> right ring stack -->
+    <path d="M1020.6 689.4 L1075 620 L1120 626" stroke-linecap="round" />
+    <!-- connector: bottom orbit node -> data panel -->
+    <path d="M846.6 952.2 L878 990" stroke-linecap="round" />
+
+    <!-- top-right bracket with terminal dots -->
+    <path d="M720 188 L765 160 L960 160 L995 148" stroke-linecap="round" />
+    <g fill="currentColor" stroke="none">
+      <circle cx="1050" cy="212" r="5" />
+      <circle cx="1072" cy="212" r="5" />
+      <circle cx="1094" cy="212" r="2.5" fill-opacity="0.8" />
+      <circle cx="1108" cy="212" r="2.5" fill-opacity="0.6" />
+      <circle cx="1122" cy="212" r="2.5" fill-opacity="0.4" />
+    </g>
+    <path d="M1000 190 L1135 190" stroke-opacity="0.3" />
+
+    <!-- bottom-centre connector -->
+    <line x1="560" y1="1108" x2="720" y2="1108" stroke-linecap="round" />
+
+    <!-- ===== hatch tick clusters (diagonal slashes) ===== -->
+    <g stroke-width="2" stroke-opacity="0.4" stroke-linecap="round">
+      <!-- top-left frame -->
+      <line x1="90"  y1="255" x2="120" y2="235" />
+      <line x1="102" y1="255" x2="132" y2="235" />
+      <line x1="114" y1="255" x2="144" y2="235" />
+      <line x1="126" y1="255" x2="156" y2="235" />
+      <line x1="138" y1="255" x2="168" y2="235" />
+      <!-- bottom-left frame -->
+      <line x1="90"  y1="1160" x2="120" y2="1142" />
+      <line x1="102" y1="1160" x2="132" y2="1142" />
+      <line x1="114" y1="1160" x2="144" y2="1142" />
+      <line x1="126" y1="1160" x2="156" y2="1142" />
+      <!-- top-right bracket -->
+      <line x1="825" y1="172" x2="850" y2="152" />
+      <line x1="838" y1="172" x2="863" y2="152" />
+      <line x1="851" y1="172" x2="876" y2="152" />
+      <line x1="864" y1="172" x2="889" y2="152" />
+      <!-- bottom-centre -->
+      <line x1="575" y1="1116" x2="600" y2="1098" />
+      <line x1="588" y1="1116" x2="613" y2="1098" />
+      <line x1="601" y1="1116" x2="626" y2="1098" />
+    </g>
+  </g>
+</svg>
