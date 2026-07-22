@@ -119,8 +119,10 @@ export function SkillOrbit({ activeSkill, revealed, onSelect }: SkillOrbitProps)
         )}
       </svg>
 
-      {/* portrait — the focal centre, aura tinted by the active accent */}
-      <div className="absolute left-1/2 top-1/2 w-[54%] -translate-x-1/2 -translate-y-1/2">
+      {/* portrait — the focal centre, aura tinted by the active accent.
+          The stack is square, so 58% keeps the same optical weight the old
+          4:5 frame had while leaving clear space out to the node ring. */}
+      <div className="absolute left-1/2 top-1/2 w-[58%] -translate-x-1/2 -translate-y-1/2">
         <InteractivePortrait leanAngle={activeAngle} accent={activeAccent} revealed={revealed} />
       </div>
 

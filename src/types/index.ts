@@ -53,8 +53,18 @@ export interface Profile {
   highlights: Localized[];
   /** Short technical chips — kept as-is (technical terms). */
   chips: string[];
+  /** Main portrait layer of the hero stack — a transparent cutout. */
   portraitSrc: string;
   portraitAlt: Localized;
+  /** Supporting 2.5D hero layers, back → front (the portrait sits above them). */
+  heroLayers: {
+    /** Far background — moves the least. */
+    background: string;
+    /** Reconstructed room/background layer. */
+    room: string;
+    /** Technical HUD overlay drawn around (never across) the face. */
+    hud: string;
+  };
   avatarModel?: string;
   email: string;
   phone?: string;

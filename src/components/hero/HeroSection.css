@@ -1,0 +1,390 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Hero portrait — 2.5D parallax stack
+   ---------------------------------------------------------------------------
+   Layer order (back → front), all inside one stable aspect-ratio stage:
+
+     1  bg.webp           far background        · least movement, scale only
+     2  roombg.webp       reconstructed room    · slight parallax
+     3  CSS atmosphere    blurred glow + shapes · every blur lives HERE, behind
+     4  portrait-hud.svg  technical midground   · independent drift + slow spin
+     5  portrait-main.png main portrait         · SHARP — no filter, no overlay
+     6  CSS foreground    edge-only bokeh       · masked clear of the face
+
+   Sharpness rules for the portrait layer (5):
+     · no `filter` / `backdrop-filter` on it or on any ancestor
+     · no translucent fill painted over it
+     · no Z translation under the perspective (that would upscale the raster)
+     · `object-fit: contain` at 1:1 with the stage — never scaled past 600px
+   Every blur in this file belongs to layer 3 (behind) or to layer 6, which is
+   radially masked so it can only render near the frame edges.
+
+   The stage owns the geometry: it never resizes or moves when a skill node is
+   selected. Only the internal layers translate, and only via transform/opacity.
+   Pointer offsets are written as inline transforms by InteractivePortrait.tsx;
+   everything ambient lives here as CSS animation.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Outer container — the stable aspect-ratio wrapper. Assets are square
+   (600² / 1254²), so the box is square: its height is known before any image
+   decodes → no layout shift on load. Overflow stays visible here so the
+   decorative rings and the accent aura can extend past the frame. */
+.hero-portrait {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  margin-inline: auto;
+  aspect-ratio: 1 / 1;
+}
+
+/* Tilt group — carries the cursor tilt for the whole framed block. Rotation
+   only; it never translates, so the container's box stays put. */
+.hero-portrait__tilt {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+/* The clipped stage that all parallax layers live in.
+   Deliberately NOT Z-translated: under `perspective: 1000` a `translateZ(10px)`
+   scales the whole subtree by ~1.01, which resamples the portrait and reads as
+   softness. Depth here comes from the layers, not from the stage. */
+.hero-portrait__stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 1.75rem;
+  background: var(--background-2);
+  /* Keeps `mix-blend-mode` on the decorative layers inside the frame. */
+  isolation: isolate;
+}
+
+/* ── Layers ────────────────────────────────────────────────────────────────── */
+
+/* Bleed on the opaque raster layers: parallax translates up to ~16px, and the
+   bleed guarantees no edge of the stage is ever exposed. Transparent layers
+   (HUD, portrait) override this back to `inset: 0` — they need no bleed, and
+   the extra size would only cost resolution. */
+.hero-layer {
+  position: absolute;
+  inset: -5%;
+  will-change: transform;
+  pointer-events: none;
+}
+
+.hero-layer img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* 1 — far background */
+.hero-layer--bg {
+  z-index: 1;
+  /* Far layer: pushed back tonally so the portrait keeps the contrast. */
+  opacity: 0.9;
+}
+
+.hero-layer--bg img {
+  /* "Subtle scale only" — a static overscan, not an animation. Backgrounds are
+     1254² into a ≤380px box, so there is resolution to spare here. */
+  object-fit: cover;
+  transform: scale(1.06);
+}
+
+/* 2 — reconstructed room */
+.hero-layer--room {
+  z-index: 2;
+  opacity: 0.82;
+  /* Fades the room out toward the bottom so the shoulders sit in shadow. */
+  mask-image: linear-gradient(180deg, #000 0%, #000 62%, rgba(0, 0, 0, 0.35) 100%);
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 62%, rgba(0, 0, 0, 0.35) 100%);
+}
+
+.hero-layer--room img {
+  object-fit: cover;
+}
+
+/* 3 — CSS atmosphere: the blurred decorative plane.
+   This sits BEHIND the HUD and the portrait, so nothing it does can soften the
+   face. All heavy `filter: blur()` work is confined to this layer. */
+.hero-atmos {
+  position: absolute;
+  inset: -8%;
+  z-index: 3;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Accent-tinted depth wash — carries the selected skill colour into the
+   midground. Blend is contained by the stage's `isolation: isolate`. */
+.hero-atmos__wash {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    62% 58% at 50% 42%,
+    color-mix(in srgb, var(--hero-accent, var(--primary)) 26%, transparent),
+    transparent 72%
+  );
+  mix-blend-mode: screen;
+  opacity: 0.7;
+}
+
+/* Soft light glow — slow, low-contrast pastel wash, kept off the face centre. */
+.hero-atmos__glow {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(34% 30% at 16% 14%, rgba(147, 168, 255, 0.3), transparent 68%),
+    radial-gradient(30% 28% at 86% 74%, rgba(224, 170, 150, 0.22), transparent 68%);
+  mix-blend-mode: screen;
+  animation: hero-glow-breathe 16s ease-in-out infinite;
+}
+
+/* Blurred atmospheric masses — out-of-focus light behind the subject. */
+.hero-atmos__shape {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(22px);
+  mix-blend-mode: screen;
+}
+
+.hero-atmos__shape--a {
+  left: -12%;
+  bottom: -10%;
+  width: 46%;
+  height: 34%;
+  background: radial-gradient(circle at 40% 40%, rgba(91, 124, 255, 0.4), transparent 70%);
+  animation: hero-shape-a 24s ease-in-out infinite alternate;
+}
+
+.hero-atmos__shape--b {
+  right: -10%;
+  top: -8%;
+  width: 38%;
+  height: 30%;
+  background: radial-gradient(circle at 60% 50%, rgba(79, 182, 199, 0.32), transparent 70%);
+  animation: hero-shape-b 28s ease-in-out infinite alternate;
+}
+
+/* 4 — technical HUD midground.
+   Transparent, so no bleed: `inset: 0` keeps its corner frames inside the stage
+   instead of cropping them. Its rotation lives in the SVG (only the orbit groups
+   spin; the frames stay locked). */
+.hero-layer--hud {
+  z-index: 4;
+  inset: 0;
+  /* Screen blend keeps the HUD strokes luminous without hiding the face. */
+  mix-blend-mode: screen;
+  opacity: 0.62;
+}
+
+/* Contact shadow — grounds the cutout. It is its own layer BELOW the portrait,
+   so the blur never touches the portrait's own pixels. */
+.hero-layer--shadow {
+  z-index: 5;
+  inset: 0;
+}
+
+.hero-layer--shadow div {
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: 2%;
+  height: 26%;
+  background: radial-gradient(50% 50% at 50% 60%, rgba(6, 10, 18, 0.7), transparent 72%);
+  filter: blur(14px);
+}
+
+/* 5 — main portrait. Sharp by contract:
+   no filter, no bleed, no upscale. 600² source into a ≤380px box → the image is
+   always downsampled, never enlarged. */
+.hero-layer--portrait {
+  z-index: 6;
+  inset: 0;
+  filter: none;
+}
+
+.hero-layer--portrait img {
+  object-fit: contain;
+  object-position: center bottom;
+  image-rendering: auto;
+}
+
+/* ── 6 — CSS-generated foreground (no raster images) ───────────────────────── */
+
+/* Edge-only by construction: the radial mask makes the middle of the frame fully
+   transparent, so no foreground effect — blurred or not — can ever land on the
+   face. Everything here is decorative and deliberately faint. */
+.hero-fx {
+  position: absolute;
+  inset: -6%;
+  z-index: 7;
+  pointer-events: none;
+  will-change: transform;
+  mask-image: radial-gradient(closest-side circle at 50% 46%, transparent 52%, #000 88%);
+  -webkit-mask-image: radial-gradient(closest-side circle at 50% 46%, transparent 52%, #000 88%);
+}
+
+/* Bokeh — pure radial-gradient dots placed around the rim, softened with a blur
+   that applies to this layer's own gradients only (never to the layers below). */
+.hero-fx__bokeh {
+  position: absolute;
+  inset: 0;
+  mix-blend-mode: screen;
+  filter: blur(2.5px);
+}
+
+.hero-fx__bokeh--near {
+  background-image:
+    radial-gradient(circle 8px at 9% 22%, rgba(147, 168, 255, 0.45), transparent 62%),
+    radial-gradient(circle 5px at 16% 82%, rgba(79, 182, 199, 0.4), transparent 62%),
+    radial-gradient(circle 10px at 91% 30%, rgba(224, 170, 150, 0.28), transparent 62%),
+    radial-gradient(circle 4px at 84% 88%, rgba(243, 245, 250, 0.34), transparent 62%);
+  animation: hero-bokeh-near 22s ease-in-out infinite alternate;
+}
+
+.hero-fx__bokeh--far {
+  background-image:
+    radial-gradient(circle 6px at 28% 6%, rgba(154, 139, 214, 0.34), transparent 62%),
+    radial-gradient(circle 3px at 96% 56%, rgba(147, 168, 255, 0.38), transparent 62%),
+    radial-gradient(circle 6px at 4% 58%, rgba(95, 195, 154, 0.26), transparent 62%),
+    radial-gradient(circle 3px at 70% 96%, rgba(243, 245, 250, 0.26), transparent 62%);
+  filter: blur(4px);
+  opacity: 0.7;
+  animation: hero-bokeh-far 30s ease-in-out infinite alternate;
+}
+
+/* Frame vignette — edge darkening only. No light veil across the top: that
+   washed out the hair. The clear centre starts well inside the face area. */
+.hero-fx__vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  pointer-events: none;
+  border-radius: 1.75rem;
+  background: radial-gradient(82% 74% at 50% 44%, transparent 60%, rgba(11, 17, 29, 0.6) 100%);
+}
+
+/* ── Ambient keyframes ─────────────────────────────────────────────────────── */
+
+@keyframes hero-glow-breathe {
+  0%,
+  100% {
+    opacity: 0.75;
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    opacity: 1;
+    transform: translate3d(0, -6px, 0);
+  }
+}
+
+@keyframes hero-bokeh-near {
+  from {
+    transform: translate3d(-5px, 4px, 0);
+    opacity: 0.7;
+  }
+  to {
+    transform: translate3d(6px, -7px, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes hero-bokeh-far {
+  from {
+    transform: translate3d(4px, -3px, 0);
+  }
+  to {
+    transform: translate3d(-5px, 5px, 0);
+  }
+}
+
+@keyframes hero-shape-a {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(8px, -10px, 0) scale(1.08);
+  }
+}
+
+@keyframes hero-shape-b {
+  from {
+    transform: translate3d(0, 0, 0) scale(1.04);
+  }
+  to {
+    transform: translate3d(-9px, 8px, 0) scale(1);
+  }
+}
+
+/* ── Responsive ────────────────────────────────────────────────────────────── */
+
+/* Tablet / mobile: lighter blurs and fewer luminous passes keep the composite
+   cheap on integrated GPUs, and the HUD steps back so the face stays dominant.
+   The portrait layer itself is untouched at every breakpoint. */
+@media (max-width: 1023px) {
+  .hero-layer--hud {
+    opacity: 0.5;
+  }
+
+  .hero-atmos__shape {
+    filter: blur(16px);
+  }
+
+  .hero-fx__bokeh--far {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-portrait__stage,
+  .hero-fx__vignette {
+    border-radius: 1.25rem;
+  }
+
+  .hero-layer--hud {
+    opacity: 0.42;
+  }
+
+  /* Small box → the rim is close to the face; pull the foreground back further. */
+  .hero-fx {
+    opacity: 0.7;
+  }
+}
+
+/* ── Touch devices ─────────────────────────────────────────────────────────── */
+
+/* No cursor to follow: the pointer listener is not attached at all (see the
+   component), and the ambient drift is dropped so the stack renders as one
+   static composite. */
+@media (hover: none), (pointer: coarse) {
+  .hero-atmos__glow,
+  .hero-atmos__shape,
+  .hero-fx__bokeh {
+    animation: none;
+  }
+
+  .hero-layer,
+  .hero-atmos,
+  .hero-fx {
+    will-change: auto;
+  }
+}
+
+/* ── Reduced motion ────────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-atmos__glow,
+  .hero-atmos__shape,
+  .hero-fx__bokeh {
+    animation: none !important;
+  }
+
+  .hero-layer,
+  .hero-atmos,
+  .hero-fx {
+    transform: none !important;
+    will-change: auto;
+  }
+}

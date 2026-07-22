@@ -18,11 +18,16 @@ export const profile: Profile = {
   highlights: [{ en: 'Manufacturing IT Experience', th: 'ประสบการณ์ไอทีสายการผลิต' }],
   chips: ['ERP', 'SQL', 'Network', 'Internal Systems'],
 
-  // Replace with a transparent head-and-shoulders portrait (see CONTENT_REQUIRED.md).
-  portraitSrc: '/images/profile-placeholder.svg',
+  // Transparent head-and-shoulders cutout, composited over the hero layers below.
+  portraitSrc: '/images/hero/portrait-main.png',
   portraitAlt: {
     en: 'Portrait of Palungrut Jankong, IT Support & Internal System Developer',
     th: 'ภาพของ Palungrut Jankong ตำแหน่ง IT Support และนักพัฒนาระบบภายใน',
+  },
+  heroLayers: {
+    background: '/images/hero/bg.webp',
+    room: '/images/hero/roombg.webp',
+    hud: '/images/hero/portrait-hud.svg',
   },
   // Optional: drop a GLB here to enable the 3D avatar path.
   avatarModel: '/models/profile-avatar.glb',

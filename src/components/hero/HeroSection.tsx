@@ -13,6 +13,7 @@ import { SkillOrbit } from './SkillOrbit';
 import { SkillContentPanel } from './SkillContentPanel';
 import { MobileSkillSelector } from './MobileSkillSelector';
 import { InteractivePortrait } from './InteractivePortrait';
+import './HeroSection.css';
 
 interface HeroSectionProps {
   activeSkill: SkillId;
@@ -137,8 +138,10 @@ export function HeroSection({ activeSkill, onSelectSkill, onOpenProject }: HeroS
             Only one InteractivePortrait is mounted at a time (per breakpoint), so
             hidden copies never animate or attach global listeners. */}
         <div className="order-1 lg:order-2">
-          {/* PortraitFrame — fixed-size box; selection never changes its geometry. */}
-          <div className="flex min-h-[560px] items-center justify-center">
+          {/* PortraitFrame — fixed-size box; selection never changes its geometry.
+              The min-height is per-breakpoint (never per-selection), so the square
+              stack below 1024px does not sit in a 560px well. */}
+          <div className="flex min-h-[340px] items-center justify-center lg:min-h-[560px]">
             {isDesktop ? (
               <SkillOrbit activeSkill={activeSkill} revealed={revealed} onSelect={handleSelect} />
             ) : (

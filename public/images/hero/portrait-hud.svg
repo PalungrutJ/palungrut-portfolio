@@ -19,15 +19,25 @@
       transform-origin: 600px 600px;
     }
 
-    /* --- Example animation hooks (uncomment to activate) -----------
-    #orbit-back  { animation: hud-spin 60s linear infinite reverse; }
-    #orbit-main  { animation: hud-spin 90s linear infinite; }
-    #orbit-nodes { animation: hud-spin 45s linear infinite; }
-    #accent-lines { animation: hud-fade 4s ease-in-out infinite; }
+    /* --- Ambient motion -------------------------------------------
+       Only the orbit groups move; the corner frames and side panels stay
+       locked so the overlay still reads as a fixed technical frame. Slowed
+       well past the authored defaults: this sits behind a face. */
+    #orbit-back  { animation: hud-spin 240s linear infinite reverse; }
+    #orbit-main  { animation: hud-spin 360s linear infinite; }
+    #orbit-nodes { animation: hud-spin 180s linear infinite; }
+    #accent-lines { animation: hud-fade 9s ease-in-out infinite; }
 
     @keyframes hud-spin { to { transform: rotate(360deg); } }
-    @keyframes hud-fade { 0%,100% { opacity: .35 } 50% { opacity: 1 } }
-    ---------------------------------------------------------------- */
+    @keyframes hud-fade { 0%,100% { opacity: .45 } 50% { opacity: .9 } }
+
+    /* The host page cannot reach inside an <img>-loaded SVG, so the
+       reduced-motion guard has to live here too. */
+    @media (prefers-reduced-motion: reduce) {
+      #orbit-back, #orbit-main, #orbit-nodes, #accent-lines {
+        animation: none;
+      }
+    }
   ]]></style>
 
   <!-- ==========================================================
