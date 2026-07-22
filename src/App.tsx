@@ -9,12 +9,10 @@ import { NavBar } from '@/components/ui/NavBar';
 import { Footer } from '@/components/ui/Footer';
 import { StickyActions } from '@/components/ui/StickyActions';
 import { HeroSection } from '@/components/hero/HeroSection';
-import { SummarySection } from '@/components/summary/SummarySection';
 import { ProjectsSection } from '@/components/projects/ProjectsSection';
 import { ProjectCaseStudy } from '@/components/projects/ProjectCaseStudy';
 import { ExperienceSection } from '@/components/experience/ExperienceSection';
 import { SkillsSection } from '@/components/skills/SkillsSection';
-import { ProcessSection } from '@/components/process/ProcessSection';
 import { ResumeSection } from '@/components/resume/ResumeSection';
 import { ContactSection } from '@/components/contact/ContactSection';
 
@@ -62,11 +60,9 @@ export default function App() {
           onSelectSkill={handleSelectSkill}
           onOpenProject={openProjectById}
         />
-        <SummarySection />
         <ProjectsSection onOpenProject={openProject} />
         <ExperienceSection />
         <SkillsSection />
-        <ProcessSection />
         <ResumeSection />
         <ContactSection />
       </main>

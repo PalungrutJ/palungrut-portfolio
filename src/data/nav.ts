@@ -7,11 +7,9 @@ export interface NavItem {
 
 export const navItems: NavItem[] = [
   { id: 'top', label: { en: 'Home', th: 'หน้าแรก' } },
-  { id: 'summary', label: { en: 'Summary', th: 'สรุป' } },
   { id: 'projects', label: { en: 'Projects', th: 'โปรเจกต์' } },
   { id: 'experience', label: { en: 'Experience', th: 'ประสบการณ์' } },
   { id: 'skills', label: { en: 'Skills', th: 'ทักษะ' } },
-  { id: 'process', label: { en: 'Process', th: 'กระบวนการ' } },
   { id: 'resume', label: { en: 'Resume', th: 'เรซูเม่' } },
   { id: 'contact', label: { en: 'Contact', th: 'ติดต่อ' } },
 ];
